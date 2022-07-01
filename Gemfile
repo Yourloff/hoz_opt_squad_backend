@@ -42,6 +42,8 @@ gem 'devise'
 
 gem 'cancancan'
 
+gem 'jwt'
+
 gem 'russian', '~> 0.6.0'
 
 gem 'sidekiq', '~> 4.1', '>= 4.1.2'
@@ -51,6 +53,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.4', '>= 3.4.2'
   gem 'capybara'
 end
+
+gem 'dotenv-rails', groups: [:development, :test]
 
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
