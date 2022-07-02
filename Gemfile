@@ -50,6 +50,8 @@ gem 'sidekiq', '~> 4.1', '>= 4.1.2'
 
 gem 'dragonfly', '~> 1.4.0'
 
+gem 'roo', '~> 2.9.0'
+
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.4', '>= 3.4.2'
