@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :orders
   resource :clients, only: [:create]
 
   post '/login', to: 'clients#login'
