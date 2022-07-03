@@ -31,6 +31,8 @@ class ClientsController < ApplicationController
   private
 
   def client_params
-    params.permit(:username, :password)
+    params.permit(:email, :password,
+                  :name, :surname, :last_name,
+                  :phone, :org, :person_status)
   end
 end
