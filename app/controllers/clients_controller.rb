@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  before_action :authorized, only: [:auto_login]
+  #before_action :authorized, only: [:auto_login]
 
   # REGISTER
   def create
@@ -25,7 +25,12 @@ class ClientsController < ApplicationController
   end
 
   def auto_login
-    render json: @client
+    if @client && @client.authenticate(params[:password])
+      token = encode_token({ client_id: @client.id })
+      render json: { client: @client, token: token }
+    else
+      render json: { error: "Неверный электронный адрес или пароль" }
+    end
   end
 
   private
