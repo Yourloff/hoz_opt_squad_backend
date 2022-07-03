@@ -25,7 +25,8 @@ class ClientsController < ApplicationController
   end
 
   def auto_login
-    render json: @client
+    token = encode_token({ client_id: @client.id })
+    render json: { client: @client, token: token }
   end
 
   private
