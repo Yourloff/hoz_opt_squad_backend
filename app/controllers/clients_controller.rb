@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  before_action :authorized, only: [:auto_login]
+  before_action :set_client
 
   # REGISTER
   def create
@@ -14,8 +14,6 @@ class ClientsController < ApplicationController
 
   # LOGGING IN
   def login
-    @client = Client.find_by(email: params[:email])
-
     if @client && @client.authenticate(params[:password])
       token = encode_token({ client_id: @client.id })
       render json: { client: @client, token: token }
@@ -26,7 +24,7 @@ class ClientsController < ApplicationController
 
   def auto_login
     token = encode_token({ client_id: @client.id })
-    render json: { client: @client, token: token }
+    render json: { token: token }
   end
 
   private
@@ -35,5 +33,9 @@ class ClientsController < ApplicationController
     params.permit(:email, :password,
                   :name, :surname, :last_name,
                   :phone, :org, :person_status)
+  end
+
+  def set_client
+    @client = Client.find_by(email: params[:email])
   end
 end
