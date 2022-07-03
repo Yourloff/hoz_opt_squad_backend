@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  #before_action :authorized, only: [:auto_login]
+  before_action :authorized, only: [:auto_login]
 
   # REGISTER
   def create
