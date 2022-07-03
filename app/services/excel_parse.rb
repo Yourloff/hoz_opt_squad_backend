@@ -62,5 +62,3 @@ class ExcelParse
     end
   end
 end
-
-ExcelParse.new.call
