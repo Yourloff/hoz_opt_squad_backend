@@ -50,7 +50,7 @@ gem 'sidekiq', '~> 4.1', '>= 4.1.2'
 
 gem 'dragonfly', '~> 1.4.0'
 
-gem 'roo', '~> 2.9.0'
+gem 'rubyXL'
 
 group :development, :test do
   gem 'byebug'
