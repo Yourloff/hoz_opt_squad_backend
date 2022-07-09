@@ -11,7 +11,7 @@ class ClientsController < ApplicationController
     end
 
     if @client.valid?
-      token = encode_token({ client_id: @client.id })
+      token = encode_token({ email: @client.email, password: @client.password })
       render json: { token: token }
     else
       render json: { error: "Некорректный электронный адрес или пароль" }
@@ -21,7 +21,7 @@ class ClientsController < ApplicationController
   # LOGGING IN
   def login
     if @client && @client.authenticate(params[:password])
-      token = encode_token({ client_id: @client.id })
+      token = encode_token({ email: @client.email, password: @client.password_digest })
       render json: { token: token }
     else
       render json: { error: "Неверный электронный адрес или пароль" }
@@ -29,7 +29,7 @@ class ClientsController < ApplicationController
   end
 
   def auto_login
-    token = encode_token({ client_id: @client.id })
+    token = encode_token({ email: @client.email, password: @client.password_digest })
     render json: { token: token }
   end
 

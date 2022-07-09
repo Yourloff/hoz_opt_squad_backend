@@ -24,8 +24,8 @@ class ApplicationController < ActionController::API
 
   def logged_in_client
     if decoded_token
-      client_id = decoded_token[0]['client_id']
-      @client = Client.find_by(id: client_id)
+      client = decoded_token[0]['email']
+      @client = Client.find_by(email: client)
     end
   end
 
