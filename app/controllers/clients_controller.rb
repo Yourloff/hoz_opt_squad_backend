@@ -5,11 +5,16 @@ class ClientsController < ApplicationController
   # REGISTER
   def create
     @client = Client.create(client_params)
+
+    if Client.find_by(email: client_params[:email]) && client_params[:password] != ''
+      return render json: { error: "Такой пользователь уже существует" }
+    end
+
     if @client.valid?
       token = encode_token({ client_id: @client.id })
-      render json: { client: @client, token: token }
+      render json: { token: token }
     else
-      render json: { error: "Пользователь с таким email уже зарегистрирован" }
+      render json: { error: "Некорректный электронный адрес или пароль" }
     end
   end
 
@@ -17,7 +22,7 @@ class ClientsController < ApplicationController
   def login
     if @client && @client.authenticate(params[:password])
       token = encode_token({ client_id: @client.id })
-      render json: { client: @client, token: token }
+      render json: { token: token }
     else
       render json: { error: "Неверный электронный адрес или пароль" }
     end
@@ -25,7 +30,7 @@ class ClientsController < ApplicationController
 
   def auto_login
     token = encode_token({ client_id: @client.id })
-    render json: { client: @client, token: token }
+    render json: { token: token }
   end
 
   private
