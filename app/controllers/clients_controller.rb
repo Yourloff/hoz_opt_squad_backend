@@ -1,5 +1,6 @@
 class ClientsController < ApplicationController
   before_action :set_client
+  before_action :authorized, only: %i[auto_login]
 
   # REGISTER
   def create
@@ -23,8 +24,7 @@ class ClientsController < ApplicationController
   end
 
   def auto_login
-    token = encode_token({ client_id: @client.id })
-    render json: { token: token }
+    render json: { client: @client }
   end
 
   private
