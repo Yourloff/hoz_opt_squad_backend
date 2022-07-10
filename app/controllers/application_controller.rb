@@ -24,16 +24,12 @@ class ApplicationController < ActionController::API
 
   def logged_in_client
     if decoded_token
-      client = decoded_token[0]['email']
-      @client = Client.find_by(email: client)
+      client_email = decoded_token[0]['email']
+      @client = Client.find_by(email: client_email)
     end
   end
 
-  def logged_in?
-    !!logged_in_client
-  end
-
   def authorized
-    render json: { message: 'Пожалуйста, войдите в систему' }, status: :unauthorized unless logged_in?
+    logged_in_client
   end
 end
