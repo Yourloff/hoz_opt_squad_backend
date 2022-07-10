@@ -1,6 +1,5 @@
 class ClientsController < ApplicationController
   before_action :set_client
-  before_action :authorized, only: %i[auto_login]
 
   # REGISTER
   def create
@@ -29,8 +28,20 @@ class ClientsController < ApplicationController
   end
 
   def auto_login
-    token = encode_token({ email: @client.email, password: @client.password_digest })
-    render json: { token: token }
+    begin
+      token = request.headers['Authorization'].split(' ')[1]
+
+      if !token
+        return render json: { error: "Не авторизован", status: 401 }
+      end
+
+      req = JWT.decode(token, ENV['SECRET'], true, algorithm: 'HS256')
+      new_token = (JWT.encode req, ENV['SECRET'])
+
+      render json: { token: new_token }
+    rescue JWT::DecodeError
+      return render json: { error: "Недопустимая кодировка сегмента" }
+    end
   end
 
   private
