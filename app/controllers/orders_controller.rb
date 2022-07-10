@@ -1,6 +1,4 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: %i[ show update destroy ]
-
   # GET /orders
   def index
     @orders = Order.where(client: @client.id)
@@ -40,11 +38,6 @@ class OrdersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_order
-      @order = Order.find(params[:id])
-    end
-
     # Only allow a list of trusted parameters through.
     def order_params
       params.require(:order).permit(:num_order, :cost, :quantity, :client_id)

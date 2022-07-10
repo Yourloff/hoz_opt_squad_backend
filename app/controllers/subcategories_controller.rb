@@ -1,6 +1,4 @@
 class SubcategoriesController < ApplicationController
-  before_action :set_subcategory, only: %i[ index show update destroy ]
-
   # POST /subcategories
   def create
     @subcategory = Subcategory.new(subcategory_params)
@@ -25,11 +23,6 @@ class SubcategoriesController < ApplicationController
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_subcategory
-    @subcategory = Subcategory.find(params[:id])
-  end
 
   # Only allow a list of trusted parameters through.
   def subcategory_params
