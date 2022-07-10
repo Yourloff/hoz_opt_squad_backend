@@ -31,14 +31,17 @@ class ClientsController < ApplicationController
     begin
       token = request.headers['Authorization'].split(' ')[1]
 
-      if !token
-        return render json: { error: "Не авторизован", status: 401 }
-      end
+      # if !token
+      #   return render json: { error: "Не авторизован", status: 401 }
+      # end
+      #
+      # req = JWT.decode(token, ENV['SECRET'], true, algorithm: 'HS256')
+      #
+      # new_token = (JWT.encode req, ENV['SECRET'])
+      #
+      # byebug
 
-      req = JWT.decode(token, ENV['SECRET'], true, algorithm: 'HS256')
-      new_token = (JWT.encode req, ENV['SECRET'])
-
-      render json: { token: new_token }
+      render json: { token: token }
     rescue JWT::DecodeError
       return render json: { error: "Недопустимая кодировка сегмента" }
     end
