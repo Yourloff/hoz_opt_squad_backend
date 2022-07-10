@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-  before_action :authorized
+  before_action :require_login
 
   def encode_token(payload)
     JWT.encode(payload, ENV['SECRET'])
@@ -17,19 +17,28 @@ class ApplicationController < ActionController::API
       begin
         JWT.decode(token, ENV['SECRET'], true, algorithm: 'HS256')
       rescue JWT::DecodeError
-        nil
+        []
       end
     end
   end
 
-  def logged_in_client
-    if decoded_token
-      client_email = decoded_token[0]['email']
+  def session_client
+    decoded_hash = decoded_token
+    if !decoded_hash.empty?
+      client_email = decoded_hash[0]['email']
       @client = Client.find_by(email: client_email)
+      payload = { email: @client.email, password: @client.password_digest }
+      encode_token(payload)
+    else
+      nil
     end
   end
 
-  def authorized
-    logged_in_client
+  def logged_in?
+    !!session_client
+  end
+
+  def require_login
+    render json: { message: "Пожалуйста авторизуйтесь" }, status: :unauthorized unless logged_in?
   end
 end
