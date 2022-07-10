@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
   before_action :set_product
-  before_action :authorized
 
   # GET /products
   def index

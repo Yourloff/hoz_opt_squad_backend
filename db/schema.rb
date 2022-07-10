@@ -10,9 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_03_140153) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_10_054102) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "basket_products", force: :cascade do |t|
+    t.bigint "products_id", null: false
+    t.bigint "baskets_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["baskets_id"], name: "index_basket_products_on_baskets_id"
+    t.index ["products_id"], name: "index_basket_products_on_products_id"
+  end
+
+  create_table "baskets", force: :cascade do |t|
+    t.bigint "client_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_baskets_on_client_id"
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "title"
@@ -68,6 +84,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_03_140153) do
     t.index ["categories_id"], name: "index_subcategories_on_categories_id"
   end
 
+  add_foreign_key "basket_products", "baskets", column: "baskets_id"
+  add_foreign_key "basket_products", "products", column: "products_id"
+  add_foreign_key "baskets", "clients"
   add_foreign_key "orders", "clients"
   add_foreign_key "orders", "products"
   add_foreign_key "products", "subcategories", column: "subcategories_id"

@@ -1,6 +1,5 @@
 class SubcategoriesController < ApplicationController
   before_action :set_subcategory, only: %i[ index show update destroy ]
-  before_action :authorized
 
   # POST /subcategories
   def create
