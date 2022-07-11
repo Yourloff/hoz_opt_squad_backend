@@ -13,7 +13,6 @@ class SubcategoriesController < ApplicationController
   # GET /subcategories
   def index
     @subcategories = Subcategory.all
-
     render json: @subcategories
   end
 

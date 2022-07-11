@@ -10,7 +10,7 @@ class ExcelParse
   end
 
   def call
-    data_xlsx
+    read_data_xlsx
   end
 
   private
@@ -19,12 +19,9 @@ class ExcelParse
     __dir__ + file
   end
 
-  def data_xlsx
+  def read_data_xlsx
     workbook = RubyXL::Parser.parse(@file)
     worksheet = workbook.worksheets[0]
-    #categories = Category.all
-    #subcategories = Subcategory.all
-    #articles = Product.all.map { |product| product.article_number }
 
     catalog = ''
     sub_catalog = ''
@@ -55,10 +52,21 @@ class ExcelParse
           data_array << array
           break
         elsif row.cells[2].font_size == 14 && row.cells[2].font_color == '000000'
-          pp data_array
-          exit
+          return data_array
         end
       end
     end
   end
+
+  def writing_data
+    read_data_xlsx
+
+    Category.all.each do |category|
+      category.subcategories
+    end
+
+    articles = Product.all.map { |product| product.article_number }
+  end
 end
+
+ExcelParse.new.call

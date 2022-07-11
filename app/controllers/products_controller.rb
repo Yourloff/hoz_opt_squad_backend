@@ -1,6 +1,4 @@
 class ProductsController < ApplicationController
-  before_action :set_product
-
   # GET /products
   def index
     @products = Product.where(subcategory: @subcategory.id)
@@ -10,13 +8,13 @@ class ProductsController < ApplicationController
 
   # GET /products/1
   def show
+    @product = Product.find(product_params[:id])
     render json: @product
   end
 
   # POST /products
   def create
-    @product = Product.new(product_params)
-    @product.subcategory = @subcategory
+    @product = Product.create(product_params)
 
     if @product.save
       render json: @product, status: :created, location: @product
@@ -27,6 +25,7 @@ class ProductsController < ApplicationController
 
   # PATCH/PUT /products/1
   def update
+    @product = Product.find(product_params[:id])
     if @product.update(product_params)
       render json: @product
     else
@@ -36,15 +35,11 @@ class ProductsController < ApplicationController
 
   # DELETE /products/1
   def destroy
+    @product = Product.find(product_params[:id])
     @product.destroy
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_product
-    @product = Product.find(params[:id])
-  end
 
   # Only allow a list of trusted parameters through.
   def product_params
