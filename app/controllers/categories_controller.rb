@@ -21,6 +21,14 @@ class CategoriesController < ApplicationController
     render json: @categories
   end
 
+  # DELETE /subcategories/1
+  def destroy
+    @category = Category.find(params[:id])
+    @category.destroy
+
+    render json: { message: "Удалено" }, status: :ok
+  end
+
   private
 
   # Only allow a list of trusted parameters through.

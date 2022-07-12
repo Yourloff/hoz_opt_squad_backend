@@ -21,6 +21,18 @@ class SubcategoriesController < ApplicationController
     render json: @subcategory
   end
 
+  # DELETE /categories/1
+  def destroy
+    @subcategory = Subcategory.find(params[:id])
+    @subcategory.destroy
+
+    render json: { message: "Удалено" }, status: :ok
+  end
+
+  def add_to_basket
+
+  end
+
   private
 
   # Only allow a list of trusted parameters through.

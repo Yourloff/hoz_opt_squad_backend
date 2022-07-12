@@ -3,5 +3,5 @@ class Subcategory < ApplicationRecord
   dragonfly_accessor :image
 
   has_one :category
-  has_many :products, foreign_key: :subcategories_id
+  has_many :products, dependent: :destroy, foreign_key: :subcategories_id
 end

@@ -1,14 +1,14 @@
 class ProductsController < ApplicationController
   # GET /products
   def index
-    @products = Product.where(subcategory: @subcategory.id)
+    @products = Product.all
 
     render json: @products
   end
 
   # GET /products/1
   def show
-    @product = Product.find(product_params[:id])
+    @product = Product.find(params[:id])
     render json: @product
   end
 
@@ -17,7 +17,7 @@ class ProductsController < ApplicationController
     @product = Product.create(product_params)
 
     if @product.save
-      render json: @product, status: :created, location: @product
+      render json: @product, status: :created
     else
       render json: @product.errors, status: :unprocessable_entity
     end
@@ -26,11 +26,13 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1
   def update
     @product = Product.find(product_params[:id])
+
     if @product.update(product_params)
       render json: @product
     else
       render json: @product.errors, status: :unprocessable_entity
     end
+
   end
 
   # DELETE /products/1
@@ -43,7 +45,7 @@ class ProductsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def product_params
-    params.require(:product).permit(:article_number, :title,
-                                    :price, :image, :subcategories_id)
+    params.require(:product).permit(:id, :article_number, :title,
+                                    :price, :image, :subcategories_id, :is_available?)
   end
 end

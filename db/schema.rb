@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_10_054102) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_11_090355) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_10_054102) do
     t.bigint "baskets_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "quantity"
     t.index ["baskets_id"], name: "index_basket_products_on_baskets_id"
     t.index ["products_id"], name: "index_basket_products_on_products_id"
   end
@@ -53,14 +54,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_10_054102) do
 
   create_table "orders", force: :cascade do |t|
     t.string "num_order"
-    t.float "cost"
     t.integer "quantity"
     t.bigint "client_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "product_id", null: false
+    t.bigint "basket_product_id", null: false
+    t.index ["basket_product_id"], name: "index_orders_on_basket_product_id"
     t.index ["client_id"], name: "index_orders_on_client_id"
-    t.index ["product_id"], name: "index_orders_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -72,6 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_10_054102) do
     t.datetime "updated_at", null: false
     t.bigint "subcategories_id", null: false
     t.boolean "is_available?", default: true
+    t.text "description"
     t.index ["subcategories_id"], name: "index_products_on_subcategories_id"
   end
 
@@ -88,7 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_10_054102) do
   add_foreign_key "basket_products", "products", column: "products_id"
   add_foreign_key "baskets", "clients"
   add_foreign_key "orders", "clients"
-  add_foreign_key "orders", "products"
+  add_foreign_key "orders", "products", column: "basket_product_id"
   add_foreign_key "products", "subcategories", column: "subcategories_id"
   add_foreign_key "subcategories", "categories", column: "categories_id"
 end

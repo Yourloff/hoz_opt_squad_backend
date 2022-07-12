@@ -36,6 +36,12 @@ class ClientsController < ApplicationController
     end
   end
 
+  def destroy
+    @client.destroy
+    session.delete(:client_id)
+    render json: 'Пользователь удалён'
+  end
+
   private
 
   def client_params

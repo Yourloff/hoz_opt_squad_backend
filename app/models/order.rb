@@ -1,4 +1,10 @@
 class Order < ApplicationRecord
+  belongs_to :basket_product
   belongs_to :client
-  belongs_to :product
+
+  private
+
+  def total
+    basket_product.product.price
+  end
 end

@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.0'
+ruby '3.0.4'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.3'
@@ -56,9 +56,10 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.4', '>= 3.4.2'
   gem 'capybara'
+  gem 'dotenv-rails'
 end
 
-gem 'dotenv-rails', groups: [:development, :test]
+gem 'email_validator'
 
 group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]

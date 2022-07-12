@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-client = Client.create(
-  username: 'orloff',
-  password: 'orloff'
+Client.create(
+  email: 'orloff@mail.ru',
+  password: '123'
 )
