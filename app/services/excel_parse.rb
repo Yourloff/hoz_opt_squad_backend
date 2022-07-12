@@ -6,7 +6,7 @@ class ExcelParse
   CATALOG_COLUMN = 3
 
   def initialize
-    @file = open_file('/pricelist.xlsx')
+    @file
   end
 
   def call
