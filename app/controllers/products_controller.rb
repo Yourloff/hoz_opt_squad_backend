@@ -3,7 +3,15 @@ class ProductsController < ApplicationController
   def index
     @products = Product.all
 
-    render json: @products
+    render json:
+             @products.each do |product|
+      product.article_number
+      product.title
+      product.price
+      product.image.url
+      product.subcategories_id
+      product.is_available?
+    end
   end
 
   # GET /products/1
