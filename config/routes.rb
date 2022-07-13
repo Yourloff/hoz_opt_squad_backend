@@ -13,5 +13,5 @@ Rails.application.routes.draw do
 
   get 'basket_products/show', to: 'basket_products#show'
   post 'basket_products/add', to: 'basket_products#add'
-  post 'basket_products/remove', to: 'basket_products#remove'
+  delete 'basket_products/remove', to: 'basket_products#remove'
 end

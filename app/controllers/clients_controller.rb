@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  before_action :set_client
+  before_action :set_client, only: %i[login destroy]
   before_action :require_login, only: %i[auto_login]
 
   # REGISTER
@@ -20,7 +20,7 @@ class ClientsController < ApplicationController
 
   # LOGGING IN
   def login
-    if @client && @client.authenticate(params[:password])
+    if @client && @client.authenticate(client_params[:password])
       token = encode_token({ email: @client.email, password: @client.password_digest })
       render json: { token: token }
     else

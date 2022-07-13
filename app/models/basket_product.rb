@@ -1,10 +1,4 @@
 class BasketProduct < ApplicationRecord
-  belongs_to :product
-  belongs_to :basket
-
-  private
-
-  def total
-    product.price * self.quantity
-  end
+  belongs_to :product, foreign_key: 'products_id'
+  belongs_to :basket, foreign_key: 'baskets_id'
 end
