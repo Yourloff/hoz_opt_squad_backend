@@ -14,7 +14,8 @@ class ProductsController < ApplicationController
 
   # POST /products
   def create
-    @product = Product.create(product_params)
+    puts params
+    @product = Product.create(params)
 
     if @product.save
       render json: @product, status: :created
